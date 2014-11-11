@@ -1,0 +1,3 @@
+# Set default behaviour to automatically normalize line endings.
+# causes issues
+# * text=auto
