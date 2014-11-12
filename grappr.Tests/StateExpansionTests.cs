@@ -1,4 +1,5 @@
-﻿using grappr.Tests.Square8;
+﻿using grappr.Search;
+using grappr.Tests.Square8;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -50,18 +51,15 @@ namespace grappr.Tests
             Console.WriteLine(init);
             BreadthFirstSearch bfs = new BreadthFirstSearch();
             var solution = bfs.Find(init);
-
-
-            //PrintNode(bfs.Path);
+            if (solution)
+            {
+                foreach (var successor in bfs.Solution)
+                {
+                    Console.WriteLine(successor.Action);
+                    Console.WriteLine(successor.State);
+                }
+            }
         }
 
-        private void PrintNode(Node n)
-        {
-            if (n.Edges.Count == 1)
-                Console.WriteLine(n.Edges[0].Successor.Action);
-            Console.WriteLine(n.State);
-            if (n.Edges.Count == 1)
-                PrintNode(n.Edges[0].Source);
-        }
     }
 }
