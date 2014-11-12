@@ -49,6 +49,7 @@ namespace grappr
         public Edge()
         {
             Label = String.Empty;
+            Id = Guid.NewGuid().ToString();
             Directed = true;
         }
 

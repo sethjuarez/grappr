@@ -31,6 +31,7 @@ namespace grappr
             {
                 Node n = new Node
                 {
+                    Label = successor.State.ToString(),
                     Cost = node.Cost + successor.Cost,
                     Depth = node.Depth++,
                     State = successor.State
@@ -40,6 +41,22 @@ namespace grappr
 
                 yield return n;
             }
+        }
+
+        public Node ReversePath(Node n)
+        {
+            var edges = n.Edges.Where(e => e.Target.Id == n.Id);
+            if (edges.Count() == 0)
+                return n;
+            else if (edges.Count() == 1)
+            {
+                n.Edges.RemoveAll(e => e.Id != edges.First().Id);
+                return ReversePath(edges.First().Source);
+            }
+
+            else
+                throw new InvalidOperationException();
+                
         }
 
 
@@ -62,7 +79,7 @@ namespace grappr
                 var n = _list.Dequeue();
                 if (n.State.IsGoal)
                 {
-                    Path = n;
+                    Path = ReversePath(n);
                     return true;
                 }
                 else

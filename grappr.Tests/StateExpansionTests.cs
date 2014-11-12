@@ -46,10 +46,22 @@ namespace grappr.Tests
         [Test]
         public void Test_Square8_BFS()
         {
-            IState init = new Square(new[] { 1, 0, 2, 3, 4, 5, 6, 7, 8 });
+            IState init = new Square(new[] { 1, 2, 0, 3, 4, 5, 6, 7, 8 });
             Console.WriteLine(init);
             BreadthFirstSearch bfs = new BreadthFirstSearch();
             var solution = bfs.Find(init);
+
+
+            //PrintNode(bfs.Path);
+        }
+
+        private void PrintNode(Node n)
+        {
+            if (n.Edges.Count == 1)
+                Console.WriteLine(n.Edges[0].Successor.Action);
+            Console.WriteLine(n.State);
+            if (n.Edges.Count == 1)
+                PrintNode(n.Edges[0].Source);
         }
     }
 }
