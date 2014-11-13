@@ -42,6 +42,17 @@ namespace grappr.Tests.Square8
             private set;
         }
 
+        public bool IsEqualTo(IState state)
+        {
+            if (state == null) return false;
+            if (!(state is Square)) return false;
+            Square square = (Square)state;
+            for (int i = 0; i < _square.Length; i++)
+                if (_square[i] != square._square[i])
+                    return false;
+            return true;
+        }
+
 
         public override string ToString()
         {
@@ -53,6 +64,18 @@ namespace grappr.Tests.Square8
             }
             return sb.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            return IsEqualTo(obj as IState);
+        }
+
+        public override int GetHashCode()
+        {
+            return _square.GetHashCode();
+        }
+
+        
     }
 
     public class SquareMove : ISuccessor

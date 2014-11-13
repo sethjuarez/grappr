@@ -6,6 +6,7 @@ namespace grappr
 {
     public class Node
     {
+        private StateComparer _stateComparer;
         public Node(IState state)
         {
             State = state;
@@ -13,6 +14,7 @@ namespace grappr
             Successor = null;
             Cost = 0;
             Depth = 0;
+            _stateComparer = new StateComparer();
         }
 
         public Node(Node parent, ISuccessor successor)
@@ -22,6 +24,7 @@ namespace grappr
             Successor = successor;
             Cost = parent.Cost + successor.Cost;
             Depth = parent.Depth + 1;
+            _stateComparer = new StateComparer();
         }
 
         public Node Parent { get; set; }
@@ -32,9 +35,10 @@ namespace grappr
         public double Cost { get; set; }
         public int Depth { get; set; }
         public List<Node> Children { get; set; }
-        
 
-        public IEnumerable<Node> Expand()
+        public IEnumerable<Node> Expand() { return Expand(null); }
+
+        public IEnumerable<Node> Expand(IEnumerable<IState> closed)
         {
             if (State == null)
                 throw new InvalidOperationException("Invalid node state!");
@@ -42,7 +46,8 @@ namespace grappr
             Children = new List<Node>();
 
             foreach (var successor in State.Successors)
-                Children.Add(new Node(this, successor));
+                if (closed == null || !closed.Contains(successor.State, _stateComparer))
+                    Children.Add(new Node(this, successor));
 
             return Children;
         }
