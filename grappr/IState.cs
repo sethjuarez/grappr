@@ -9,6 +9,6 @@ namespace grappr
         IEnumerable<ISuccessor> Successors { get; }
         bool IsGoal { get; }
         bool IsEqualTo(IState state);
+        string Id { get; }
     }
-
 }
