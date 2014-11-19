@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace grappr
 {
-    public class BreadthFirstSearch : ISearchStrategy
+    public class DepthFirstSearch : ISearchStrategy
     {
-        readonly Queue<Node> _list;
-        public BreadthFirstSearch()
+        readonly Stack<Node> _list;
+        public DepthFirstSearch()
         {
-            _list = new Queue<Node>();
+            _list = new Stack<Node>();
         }
 
         public void Add(Node node)
         {
-            _list.Enqueue(node);
+            _list.Push(node);
         }
 
         public int Count()
@@ -24,7 +24,7 @@ namespace grappr
 
         public Node Remove()
         {
-            return _list.Dequeue();
+            return _list.Pop();
         }
     }
 }

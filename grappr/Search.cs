@@ -4,20 +4,6 @@ using System.Collections.Generic;
 
 namespace grappr
 {
-    public class StateExpansionEventArgs : EventArgs
-    {
-        public StateExpansionEventArgs(IState parent, ISuccessor successor)
-        {
-            Successor = successor;
-            Parent = parent;
-            CancelExpansion = false;
-        }
-
-        public bool CancelExpansion { get; set; }
-        public IState Parent { get; private set; }
-        public ISuccessor Successor { get; private set; }
-    }
-
     public class Search
     {
         public event EventHandler<StateExpansionEventArgs> SuccessorExpanded;
@@ -48,7 +34,7 @@ namespace grappr
                 var n = _strategy.Remove();
                 if (n.Parent != null && n.Successor != null)
                 {
-                    var eventArgs = new StateExpansionEventArgs(n.Parent.State, n.Successor);
+                    var eventArgs = new StateExpansionEventArgs(n.Parent.State, n.Successor, n);
                     OnSuccessorExpanded(this, eventArgs);
 
                     if (eventArgs.CancelExpansion)
@@ -72,7 +58,7 @@ namespace grappr
             return false;
         }
 
-        public void CreateSolution(Node n)
+        private void CreateSolution(Node n)
         {
             if (Solution == null) Solution = new List<ISuccessor>();
             var node = n;

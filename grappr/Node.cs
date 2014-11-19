@@ -6,7 +6,7 @@ namespace grappr
 {
     public class Node
     {
-        private StateComparer _stateComparer;
+        private readonly StateComparer _stateComparer;
         public Node(IState state)
         {
             State = state;

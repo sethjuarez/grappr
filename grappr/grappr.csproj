@@ -39,6 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AStarSearch.cs" />
+    <Compile Include="BestFirstSearch.cs" />
+    <Compile Include="DepthFirstSearch.cs" />
+    <Compile Include="DepthLimitedSearch.cs" />
+    <Compile Include="HeuristicSearch.cs" />
     <Compile Include="ISearchStrategy.cs" />
     <Compile Include="BreadthFirstSearch.cs" />
     <Compile Include="ISuccessor.cs" />
@@ -47,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="StateComparer.cs" />
+    <Compile Include="StateExpansionEventArgs.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
