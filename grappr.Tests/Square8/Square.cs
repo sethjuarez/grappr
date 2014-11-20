@@ -14,7 +14,10 @@ namespace grappr.Tests.Square8
         {
             _square = square;
             IsGoal = CalculateGoal(_square);
+            Id = Guid.NewGuid().ToString();
         }
+
+        public string Id { get; private set; }
 
         private bool CalculateGoal(int[] square)
         {
@@ -74,8 +77,6 @@ namespace grappr.Tests.Square8
         {
             return _square.GetHashCode();
         }
-
-        
     }
 
     public class SquareMove : ISuccessor
