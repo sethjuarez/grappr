@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace grappr.Tests
 {
     [TestFixture]
-    public class Square8Tests
+    public class SquareTests
     {
         private static int[] CreateSquare(int i)
         {
@@ -42,9 +42,9 @@ namespace grappr.Tests
                 int[] square = CreateSquare(i);
                 IState init = new Square(square);
                 Console.WriteLine(init.ToString());
-                foreach (var s in init.Successors)
+                foreach (var s in init.GetSuccessors())
                 {
-                    Console.WriteLine("---------\n{0} ({1}{2})", s.Action, s.Cost, s.State.IsGoal ? ", Goal" : "");
+                    Console.WriteLine("---------\n{0} ({1}{2})", s.Action, s.Cost, s.State.IsTerminal ? ", Goal" : "");
                     Console.WriteLine(s.State);
                 }
 

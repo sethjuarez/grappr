@@ -13,7 +13,7 @@ namespace grappr.Tests.Square8
         public Square(int[] square)
         {
             _square = square;
-            IsGoal = CalculateGoal(_square);
+            IsTerminal = CalculateGoal(_square);
             Id = Guid.NewGuid().ToString();
         }
 
@@ -26,20 +26,17 @@ namespace grappr.Tests.Square8
                     return false;
             return true;
         }
-        public IEnumerable<ISuccessor> Successors
+        public IEnumerable<ISuccessor> GetSuccessors()
         {
-            get
+            for (int i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    var move = new SquareMove(_moves[i], _square);
-                    if (move.IsLegal)
-                        yield return move;
-                }
+                var move = new SquareMove(_moves[i], _square);
+                if (move.IsLegal)
+                    yield return move;
             }
         }
 
-        public bool IsGoal
+        public bool IsTerminal
         {
             get;
             private set;
@@ -60,7 +57,7 @@ namespace grappr.Tests.Square8
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < _square.Length; i++ )
+            for (int i = 0; i < _square.Length; i++)
             {
                 sb.Append(string.Format("  {0} ", _square[i] == 0 ? "_" : _square[i].ToString()));
                 if ((i + 1) % 3 == 0) sb.Append("\n");
