@@ -1,10 +1,7 @@
-﻿using grappr.Tests.Square8;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace grappr.Tests
 {
@@ -35,7 +32,7 @@ namespace grappr.Tests
         }
 
         [Test]
-        public void Test_Square8_Expansion()
+        public void Test_Square_Expansion()
         {
             for (int i = 0; i < 9; i++)
             {
@@ -53,31 +50,32 @@ namespace grappr.Tests
         }
 
         [Test]
-        public void Test_Easy_Square8_BFS()
+        public void Test_Easy_Square_BFS()
         {
-            IState init = new Square(new[] { 1, 2, 0, 3, 4, 5, 6, 7, 8 });
+            IState init = new Square(new[] { 1, 4, 2, 3, 5, 8, 6, 0, 7 });
             Console.WriteLine(init);
             Search bfs = new Search(new BreadthFirstSearch());
             var solution = bfs.Find(init);
 
             if (solution) PrintSolution(bfs.Solution);
+            Assert.IsTrue(solution);
         }
 
 
         [Test]
-        public void Test_Hard_Square8_BFS()
+        public void Test_Hard_AStar()
         {
             IState init = new Square(new[] { 1, 2, 3, 4, 5, 6, 7, 0, 8 });
-            Console.WriteLine(init);
-            Search bfs = new Search(new DepthLimitedSearch(20));
-            var solution = bfs.Find(init);
 
-            if (solution) PrintSolution(bfs.Solution);
-            else
-            {
-                
-                Console.WriteLine("No Solution!");
-            }
+            AStarSearch strategy = new AStarSearch() 
+            { 
+                Heuristic = s => (s as Square).Missplaced() 
+            };
+
+            Search a = new Search(strategy);
+            var solution = a.Find(init);
+            if (solution) PrintSolution(a.Solution);
+            Assert.IsTrue(solution);
         }
 
     }

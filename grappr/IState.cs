@@ -15,6 +15,7 @@ namespace grappr
     public interface IAdversarialState : IState
     {
         double Utility { get; }
+        bool Player { get; }
     }
 
     

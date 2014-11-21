@@ -47,6 +47,7 @@
     <Compile Include="ISearchStrategy.cs" />
     <Compile Include="BreadthFirstSearch.cs" />
     <Compile Include="ISuccessor.cs" />
+    <Compile Include="Minimax.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
