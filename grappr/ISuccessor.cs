@@ -9,6 +9,6 @@ namespace grappr
         double Cost { get; }
         string Action { get; }
         IState State { get; }
-        bool IsLegal { get; }
+        //bool IsLegal { get; }
     }
 }

@@ -6,9 +6,16 @@ namespace grappr
 {
     public interface IState
     {
-        IEnumerable<ISuccessor> Successors { get; }
-        bool IsGoal { get; }
-        bool IsEqualTo(IState state);
         string Id { get; }
+        bool IsTerminal { get; }
+        bool IsEqualTo(IState state);
+        IEnumerable<ISuccessor> GetSuccessors();       
     }
+
+    public interface IAdversarialState : IState
+    {
+        double Utility { get; }
+    }
+
+    
 }

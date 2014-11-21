@@ -45,7 +45,7 @@ namespace grappr
 
             Children = new List<Node>();
 
-            foreach (var successor in State.Successors)
+            foreach (var successor in State.GetSuccessors())
                 if (closed == null || !closed.Contains(successor.State, _stateComparer))
                     Children.Add(new Node(this, successor));
 

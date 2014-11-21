@@ -41,7 +41,7 @@ namespace grappr
                         return false;
                 }
 
-                if (n.State.IsGoal)
+                if (n.State.IsTerminal)
                 {
                     CreateSolution(n);
                     return true;
