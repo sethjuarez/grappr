@@ -11,10 +11,4 @@ namespace grappr
         bool IsEqualTo(IState state);
         IEnumerable<ISuccessor> GetSuccessors();       
     }
-
-    public interface IAdversarialState : IState
-    {
-        double Utility { get; }
-        bool Player { get; }
-    }
 }
