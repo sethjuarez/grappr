@@ -17,6 +17,4 @@ namespace grappr
         double Utility { get; }
         bool Player { get; }
     }
-
-    
 }

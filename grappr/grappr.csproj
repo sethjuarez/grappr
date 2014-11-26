@@ -50,8 +50,10 @@
     <Compile Include="Minimax.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="IState.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search.cs" />
+    <Compile Include="SimpleSearch.cs" />
     <Compile Include="StateComparer.cs" />
     <Compile Include="StateExpansionEventArgs.cs" />
   </ItemGroup>

@@ -54,7 +54,7 @@ namespace grappr.Tests
         {
             IState init = new Square(new[] { 1, 4, 2, 3, 5, 8, 6, 0, 7 });
             Console.WriteLine(init);
-            Search bfs = new Search(new BreadthFirstSearch());
+            SimpleSearch bfs = new SimpleSearch(new BreadthFirstSearch());
             var solution = bfs.Find(init);
 
             if (solution) PrintSolution(bfs.Solution);
@@ -72,7 +72,7 @@ namespace grappr.Tests
                 Heuristic = s => (s as Square).Missplaced() 
             };
 
-            Search a = new Search(strategy);
+            SimpleSearch a = new SimpleSearch(strategy);
             var solution = a.Find(init);
             if (solution) PrintSolution(a.Solution);
             Assert.IsTrue(solution);

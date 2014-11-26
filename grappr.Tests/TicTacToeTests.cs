@@ -27,7 +27,7 @@ namespace grappr.Tests
         public void Test_Expansion()
         {
 
-            TicTacToe t = new TicTacToe(true, new[] { -1, 0, -1, 1, 0, 0, 0, 1, 0 });
+            TicTacToe t = new TicTacToe(false, new[] { -1, 0, -1, 1, 0, 0, 0, 1, 0 });
             Console.WriteLine(t);
             foreach (var successor in t.GetSuccessors())
             {

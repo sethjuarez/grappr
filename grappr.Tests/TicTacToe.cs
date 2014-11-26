@@ -74,7 +74,7 @@ namespace grappr.Tests
             {
                 if(_board[i] == 0)
                 {
-                    var play = Player ? -1 : 1;
+                    var play = Player ? 1 : -1;
                     var newBoard = (int[])_board.Clone();
                     newBoard[i] = play;
                     yield return new TicTacToeMove(new TicTacToe(!Player, newBoard), i.ToString());
