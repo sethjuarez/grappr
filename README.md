@@ -15,7 +15,7 @@ This is the code I will use to demo basic AI techniques. Feel free to have a loo
 		1. [Best First](grappr/BestFirstSearch.cs)
 		2. [A*](grappr/AStarSearch.cs)
 3. [**Adversarial Search**](grappr/AdversarialSearch.cs)
-	- Done
+	- **Done**
 		1. [Minimax](grappr/Minimax.cs)
 		2. [Alpha-Beta](grappr/AlphaBeta.cs)
 
