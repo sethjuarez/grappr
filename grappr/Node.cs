@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace grappr
 {
@@ -14,6 +15,8 @@ namespace grappr
             Successor = null;
             Cost = 0;
             Depth = 0;
+            Path = false;
+            Children = new List<Node>();
             _stateComparer = new StateComparer();
         }
 
@@ -24,13 +27,19 @@ namespace grappr
             Successor = successor;
             Cost = parent.Cost + successor.Cost;
             Depth = parent.Depth + 1;
+            Path = false;
+            Children = new List<Node>();
             _stateComparer = new StateComparer();
         }
 
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public Node Parent { get; set; }
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public ISuccessor Successor { get; set; }
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public IState State { get; set; }
         public bool IsRoot { get { return Parent == null && Successor == null; } }
+        public bool Path { get; set; }
 
         public double Cost { get; set; }
         public int Depth { get; set; }
@@ -40,16 +49,19 @@ namespace grappr
 
         public IEnumerable<Node> Expand(IEnumerable<IState> closed)
         {
+            foreach (var successor in State.GetSuccessors())
+                if (closed == null || !closed.Contains(successor.State, _stateComparer))
+                    AddChild(new Node(this, successor));
+
+            return Children;
+        }
+
+        public void AddChild(Node n)
+        {
             if (State == null)
                 throw new InvalidOperationException("Invalid node state!");
 
-            Children = new List<Node>();
-
-            foreach (var successor in State.GetSuccessors())
-                if (closed == null || !closed.Contains(successor.State, _stateComparer))
-                    Children.Add(new Node(this, successor));
-
-            return Children;
+            Children.Add(n);
         }
     }
 }

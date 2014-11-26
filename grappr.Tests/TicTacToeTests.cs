@@ -34,5 +34,14 @@ namespace grappr.Tests
                 PrintSuccessor(successor);
             }
         }
+
+        [Test]
+        public void SuperSimpleWinMinimax()
+        {
+            Minimax m = new Minimax();
+            m.Depth = 1;
+            var initial = new TicTacToe(false, new[] { -1, 0, -1, -1, 1, 1, 1, 0, 1 });
+            m.Find(initial);
+        }
     }
 }

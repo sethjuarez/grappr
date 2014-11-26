@@ -5,56 +5,98 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace grappr
-{    
+{
+    public static class EnumerableExtensions
+    {
+        private static Random _random = new Random(DateTime.Now.Millisecond);
+        public static T Rand<T>(this IEnumerable<T> items)
+        {
+            var count = items.Count();
+            var d = _random.Next(count);
+            return items.ElementAt(d);
+        }
+    }
+
     public class Minimax : AdversarialSearch
     {
         public int Depth { get; set; }
+        public Node Root { get; set; }
         public override ISuccessor Find(IAdversarialState state)
         {
-            double value = 0;
+            Root = new Node(state);
+            Node a;
 
-            
             if (state.Player)
-                value = Max(state, Depth * 2);
+                a = Max(Root);
             else
-                value = Min(state, Depth * 2);
+                a = Min(Root);
 
-            return null;
+            return a.Successor;
         }
 
 
 
-        public double Max(IAdversarialState state, int depth)
+        private Node Find(Node node, double initial, Func<double, double, double> limit, Func<Node, Node> f)
         {
-            if (depth - 1 == 0) return state.Utility;
-            double v = double.NegativeInfinity;
+            var state = node.State as IAdversarialState;
+
+            if(state.IsTerminal || node.Depth == Depth * 2)
+            {
+                node.Cost = state.Utility;
+                return node;
+            }
+
+            double v = initial;
+            
             foreach (var successor in state.GetSuccessors())
             {
                 var s = successor.State as IAdversarialState;
-                if (ProcessEvent(state, depth, successor))
-                    v = Math.Max(v, Min(s, depth - 1));
-                else return s.Utility;
+                var child = new Node(node, successor) { Cost = s.Utility, Depth = node.Depth + 1 };
+                node.AddChild(child);
+
+                if (ProcessEvent(node, successor))
+                {
+                    var g = f(child);
+                    v = limit(v, g.Cost);
+                    child.Cost = g.Cost;
+                    node.Cost = v;
+                }
+                else return child;
             }
-            return v;
+
+            Console.WriteLine("Best v: {0}", v, f.Method.Name);
+
+            var q = node.Children
+                        .Where(n => n.Cost == v && n.State.IsTerminal);
+            Node r;
+            if (q.Count() > 0) // favor terminal nodes first
+                r = q.Rand();
+            else
+                r = node.Children
+                            .Where(n => n.Cost == v)
+                            .Rand();
+            r.Cost = v;
+            r.Path = true;
+            return r;
+
         }
 
-        public double Min(IAdversarialState state, int depth)
+        public Node Max(Node node)
         {
-            if (depth - 1 == 0) return state.Utility;
-            double v = double.PositiveInfinity;
-            foreach (var successor in state.GetSuccessors())
-            {
-                var s = successor.State as IAdversarialState;
-                if (ProcessEvent(state, depth, successor))
-                    v = Math.Max(v, Min(s, depth - 1));
-                else return s.Utility;
-            }
-            return 0;
+            var n = Find(node, double.NegativeInfinity, Math.Max, Min);
+            return n;
         }
 
-        private bool ProcessEvent(IAdversarialState state, int depth, ISuccessor successor)
+        public Node Min(Node node)
         {
-            var args = new StateExpansionEventArgs(state, successor, state.Utility, depth);
+            var n = Find(node, double.PositiveInfinity, Math.Min, Max);
+            return n;
+        }
+
+        private bool ProcessEvent(Node node, ISuccessor successor)
+        {
+            var state = node.State as IAdversarialState;
+            var args = new StateExpansionEventArgs(state, successor, node.Cost, node.Depth);
             OnSuccessorExpanded(this, args);
             return !args.CancelExpansion;
         }
