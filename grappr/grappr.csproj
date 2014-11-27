@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdversarialSearch.cs" />
     <Compile Include="AlphaBeta.cs" />
     <Compile Include="AStarSearch.cs" />
     <Compile Include="BestFirstSearch.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="DepthLimitedSearch.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="HeuristicSearch.cs" />
+    <Compile Include="IAdversarialState.cs" />
     <Compile Include="ISearchStrategy.cs" />
     <Compile Include="BreadthFirstSearch.cs" />
     <Compile Include="ISuccessor.cs" />
