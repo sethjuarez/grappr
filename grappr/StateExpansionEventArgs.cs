@@ -4,20 +4,27 @@ using System.Collections.Generic;
 
 namespace grappr
 {
-    public class StateExpansionEventArgs : EventArgs
+    public class StateEventArgs : EventArgs
+    {
+        public StateEventArgs(IState state)
+        {
+            State = state;
+        }
+        public IState State { get; private set; }
+    }
+    public class StateExpansionEventArgs : StateEventArgs
     {
 
         public StateExpansionEventArgs(IState parent, ISuccessor successor, double cost, int depth)
+            :base (parent)
         {
             Depth = depth;
             Cost = cost;
             Successor = successor;
-            Parent = parent;
             CancelExpansion = false;
                     
         }
         public bool CancelExpansion { get; set; }
-        public IState Parent { get; private set; }
         public ISuccessor Successor { get; private set; }
         public double Cost { get; private set; }
         public int Depth { get; private set; }

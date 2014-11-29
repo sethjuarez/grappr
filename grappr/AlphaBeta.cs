@@ -49,7 +49,10 @@ namespace grappr
                 alpha = Math.Max(alpha, v);
             }
 
-            return GetBestChildNode(node, v);
+            if (node.Children.Count == 0)
+                return node;
+            else
+                return GetBestChildNode(node, v);
         }
 
         public Node Min(Node node, double alpha, double beta)
@@ -76,7 +79,10 @@ namespace grappr
                 beta = Math.Min(beta, v);
             }
 
-            return GetBestChildNode(node, v);
+            if (node.Children.Count == 0)
+                return node;
+            else
+                return GetBestChildNode(node, v);
         }
     }
 }

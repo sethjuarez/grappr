@@ -95,6 +95,11 @@ namespace grappr.Tests
             return true;
         }
 
+        public IAdversarialState Reset()
+        {
+            return new TicTacToe(Player);
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

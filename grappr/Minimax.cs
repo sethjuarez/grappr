@@ -44,7 +44,10 @@ namespace grappr
                 node.Cost = v;
             }
 
-            return GetBestChildNode(node, v);
+            if (node.Children.Count == 0)
+                return node;
+            else
+                return GetBestChildNode(node, v);
         }
 
         public virtual Node Max(Node node)
