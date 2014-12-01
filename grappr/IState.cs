@@ -9,6 +9,7 @@ namespace grappr
         string Id { get; }
         bool IsTerminal { get; }
         bool IsEqualTo(IState state);
-        IEnumerable<ISuccessor> GetSuccessors();       
+        IEnumerable<ISuccessor> GetSuccessors();
+        double Heuristic();
     }
 }

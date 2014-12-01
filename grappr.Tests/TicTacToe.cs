@@ -125,6 +125,11 @@ namespace grappr.Tests
             return _board.GetHashCode();
         }
 
+        public double Heuristic()
+        {
+            // not applicable in this case
+            return 1;
+        }
     }
 
 

@@ -100,8 +100,9 @@ namespace grappr.Tests
             return _square.GetHashCode();
         }
 
-        public int Missplaced()
+        public double Heuristic()
         {
+            // heuristic for missplaced items
             int problem = 0;
             for (int i = 0; i < _square.Length; i++)
                 if (i != _square[i]) problem++;

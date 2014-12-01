@@ -67,9 +67,9 @@ namespace grappr.Tests
         {
             IState init = new Square(new[] { 1, 2, 3, 4, 5, 6, 7, 0, 8 });
 
-            AStarSearch strategy = new AStarSearch() 
-            { 
-                Heuristic = s => (s as Square).Missplaced() 
+            AStarSearch strategy = new AStarSearch()
+            {
+                Heuristic = s => s.Heuristic()
             };
 
             SimpleSearch a = new SimpleSearch(strategy);
